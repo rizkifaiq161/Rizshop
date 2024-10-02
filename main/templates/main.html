@@ -1,43 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>🛍️ Rizshop</title>
+{% endblock meta %}
 {% block content %}
-    <h1>Rizz Shop</h1>
+{% include 'navbar.html' %}
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col">
+  <div class="p-6 mb-6 relative bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl shadow-lg">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {% include "card_info.html" with title='Name' value=name %}
+      {% include "card_info.html" with title='Class' value=class %}
+    </div>
+  </div>
 
-    <h5>Name:</h5> 
-    <p>{{ name }}</p>
+  <div class="px-3 mb-4">
+    <div class="flex rounded-md items-center bg-indigo-600 py-2 px-4 w-fit shadow-md">
+      <h1 class="text-white text-center">Last Login: {{last_login}}</h1>
+    </div>
+  </div>
 
-    <h5>Class:</h5>
-    <p>{{ class }}</p>
-
-
-    <table style="border-collapse: separate; border-spacing: 15px;">
-        <tr>
-            <th>Nama</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Amount</th>
-        </tr>
-        
-        {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
-            <tr>
-                <td>{{product.name}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.amount}}</td>
-            </tr>
-    </table>
-
-    <br />
-
-    <a href="{% url 'main:create_product' %}">
-        <button>
-            Add New Product
-        </button>
-    <a href="{% url 'main:logout' %}">
-        <button>
-            Logout
-        </button>
+  <div class="flex justify-end mb-6">
+    <a href="{% url 'main:create_product' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 shadow-lg">
+        🛒 Add New Product
     </a>
-
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-
+  </div>
+  
+  {% if not products %}
+  <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+    <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+    <p class="text-center text-gray-600 mt-4">Belum ada data produk pada Rizshop.</p>
+  </div>
+  {% else %}
+  <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full">
+    {% for product_entry in products %}
+      {% include 'card_product.html' with product_entry=product_entry %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
 {% endblock content %}

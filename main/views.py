@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
 from main.form import ProductForm
 from django.urls import reverse
@@ -33,11 +33,11 @@ def create_product(request):
     form = ProductForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
-        form.save()
-        product = form.save(commit=False)
-        product.user = request.user
-        product.save()
+        product = form.save(commit=False)  # Simpan tanpa menyimpan ke database dulu
+        product.user = request.user  # Tetapkan user yang sedang login
+        product.save()  # Simpan produk dengan user
         return redirect('main:show_main')
+        
     context = {'form': form}
     return render(request, "create_product.html", context)
 
@@ -94,3 +94,34 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_product(request, id):
+    # Mendapatkan product berdasarkan ID
+    product = Item.objects.get(pk=id)  # Menggunakan objects, bukan object
+    
+    # Set product sebagai instance dari form
+    form = ProductForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman utama
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+
+def delete_product(request, id):
+    product = Item.object.get(pk = id)
+
+    product.delete()
+    return HttpResponseRedirect(reverse("main:show_main"))
+
+def home_view(request):
+    return render(request, 'home.html')
+
+def about_view(request):
+    return render(request, 'about.html')
+
+def contact_view(request):
+    return render(request, 'contact.html')
+

@@ -1,3 +1,164 @@
+# TUGAS 5
+
+1. **Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!**
+
+Dalam CSS, ketika ada beberapa selector yang berlaku untuk elemen HTML yang sama, urutan prioritas pengambilan (atau "specificity") akan menentukan gaya mana yang diterapkan. Urutan prioritas tersebut adalah sebagai berikut:
+
+-Inline Styles: Gaya yang diterapkan langsung pada elemen menggunakan atribut style.
+
+-ID Selector: Selector yang menggunakan ID, yang ditandai dengan simbol #.
+
+-Class, Attribute, dan Pseudo-class Selectors: Selector yang menggunakan kelas (.), atribut ([attribute]), atau pseudo-class seperti :hover.
+
+-Element (Tag) Selector dan Pseudo-element Selectors: Selector yang berdasarkan nama elemen (tag) HTML dan pseudo-element seperti ::before atau ::after.
+
+
+2. **Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!**
+
+Responsive design adalah konsep penting dalam pengembangan aplikasi web karena beberapa alasan berikut:
+
+1.Pengalaman Pengguna yang Lebih Baik
+Dengan responsive design, aplikasi web dapat menyesuaikan tampilan dan layout sesuai dengan ukuran layar perangkat yang digunakan. Ini memastikan pengalaman pengguna yang konsisten dan nyaman, baik di desktop, tablet, maupun smartphone.
+2.Meningkatkan Aksesibilitas
+Responsive design memudahkan pengguna untuk mengakses konten tanpa harus melakukan zoom in/out atau menggulir secara horizontal. Ini sangat penting untuk pengguna dengan kebutuhan khusus.
+3.SEO (Search Engine Optimization)
+Google lebih menyukai situs web yang responsif karena mereka memberikan pengalaman pengguna yang lebih baik. Situs yang responsif cenderung mendapatkan peringkat lebih tinggi di hasil pencarian.
+4.Efisiensi dalam Pengembangan dan Pemeliharaan
+Menggunakan satu versi aplikasi web yang responsif mengurangi kebutuhan untuk membuat dan memelihara beberapa versi untuk perangkat yang berbeda. Ini menghemat waktu dan sumber daya dalam pengembangan.
+5.Perkembangan Penggunaan Perangkat Seluler
+Dengan semakin banyaknya orang yang mengakses internet melalui perangkat seluler, aplikasi web yang responsif memastikan bahwa pengguna dapat mengakses konten di mana saja dan kapan saja.
+
+Contoh Aplikasi:
+Aplikasi yang Sudah Menerapkan Responsive Design
+Facebook
+
+-Facebook memiliki desain responsif yang dapat beradaptasi dengan berbagai ukuran layar, memungkinkan pengguna untuk dengan mudah mengakses fitur dan konten di perangkat apapun.
+
+Aplikasi yang Belum Menerapkan Responsive Design
+Beberapa Situs E-commerce Kecil
+
+-Banyak situs e-commerce kecil atau lokal masih menggunakan desain statis yang tidak responsif. Pengguna seringkali mengalami kesulitan saat mengakses situs dari perangkat mobile, sehingga mereka harus menggulir atau memperbesar tampilan.
+
+3. **Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!**
+
+1.Margin
+Margin adalah ruang di luar elemen. Ini menciptakan jarak antara elemen tersebut dan elemen lain di sekitarnya.
+Margin dapat diatur untuk semua sisi sekaligus, atau untuk sisi tertentu (atas, kanan, bawah, kiri)
+
+/* Mengatur margin semua sisi */
+.element {
+    margin: 20px;
+}
+
+/* Mengatur margin untuk sisi tertentu */
+.element {
+    margin-top: 10px;   /* Atas */
+    margin-right: 15px; /* Kanan */
+    margin-bottom: 10px; /* Bawah */
+    margin-left: 15px;  /* Kiri */
+}
+
+2.Border
+Definisi: Border adalah garis yang mengelilingi elemen. Border dapat memiliki berbagai gaya, ketebalan, dan warna.
+border dapat mengatur border untuk setiap sisi
+
+/* Mengatur border untuk semua sisi */
+.element {
+    border: 2px solid black; /* Ketebalan 2px, gaya solid, warna hitam */
+}
+
+/* Mengatur border untuk sisi tertentu */
+.element {
+    border-top: 2px solid red;    /* Atas */
+    border-right: 1px dashed blue; /* Kanan */
+    border-bottom: 3px dotted green; /* Bawah */
+    border-left: 4px double orange; /* Kiri */
+}
+
+3.Padding
+Padding adalah ruang di dalam elemen, antara konten elemen (seperti teks atau gambar) dan border-nya. Ini menciptakan jarak di dalam elemen.
+
+Padding dapat diatur untuk semua sisi sekaligus, atau untuk sisi tertentu.
+
+/* Mengatur padding semua sisi */
+.element {
+    padding: 15px;
+}
+
+/* Mengatur padding untuk sisi tertentu */
+.element {
+    padding-top: 10px;    /* Atas */
+    padding-right: 20px;  /* Kanan */
+    padding-bottom: 15px;  /* Bawah */
+    padding-left: 5px;    /* Kiri */
+}
+
+Dapat disimpulkan bahwa 
+
+-Margin mengontrol ruang di luar elemen.
+
+-Border mengontrol tampilan garis di sekitar elemen.
+
+-Padding mengontrol ruang di dalam elemen.
+
+
+4. **Jelaskan konsep flex box dan grid layout beserta kegunaannya!**
+
+-Flexbox (Flexible Box Layout)
+
+Flexbox adalah metode layout satu dimensi (1D) yang dirancang untuk menyusun elemen dalam baris (horizontal) atau kolom (vertikal). Flexbox memberikan kontrol yang lebih besar atas ruang di antara elemen dan memungkinkan mereka untuk mengubah ukuran dan mengisi ruang yang tersedia.
+
+Kegunaan:
+Mengatur menu navigasi.
+Membuat card layout.
+Menyusun elemen di dalam form.
+Membuat elemen responsif dengan penyesuaian ukuran yang mudah.
+
+Contoh implementasi nya:
+.container {
+    display: flex; /* Mengaktifkan flexbox */
+    flex-direction: row; /* Atur elemen dalam baris */
+    justify-content: space-between; /* Ruang antar elemen */
+    align-items: center; /* Rata tengah secara vertikal */
+}
+
+.item {
+    flex: 1; /* Elemen akan mengisi ruang yang sama */
+    padding: 10px;
+}
+
+-Grid Layout
+
+Grid Layout adalah metode tata letak dua dimensi (2D) yang memungkinkan penyusunan elemen dalam baris dan kolom. Dengan Grid, Anda dapat membuat layout yang lebih kompleks dan terstruktur dengan kontrol yang lebih baik atas ukuran dan posisi elemen.
+
+Kegunaan:
+Membuat layout yang kompleks seperti dashboard.
+Menyusun gambar atau galeri.
+Membuat form yang terstruktur.
+Desain yang lebih mudah dan lebih intuitif untuk konten berbasis grid.
+
+Implentasinya:
+.container {
+    display: grid; /* Mengaktifkan grid layout */
+    grid-template-columns: repeat(3, 1fr); /* Tiga kolom dengan ukuran sama */
+    grid-gap: 10px; /* Jarak antar elemen */
+}
+
+.item {
+    padding: 20px;
+    background-color: lightgray;
+}
+
+
+
+5. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!**
+
+Dalam mengimplementasikan setiap checklist, saya menggunakan pendekatan Bootstrap untuk memodifikasi dan mendesain file html login, register, add product, edit product, dan daftar produk. Dalam setiap file tersebut saya mendefinisikan setiap class menggunakan <div> dimana nantinya setiap class tersebut saya jadikan selector untuk nantinya modifikasi background, font, alignment, text color, dll bisa dilakukan. Lalu, untuk tampilan laman login, daftar produk, add product, edit_product, dan register saya mengaplikasikan card.
+
+kemudian saya membuat card ada card_info dan card_product yang dimana kedua nya masing masing beda penggunaan nya. untuk card_info untuk membuat bagian atas yaitu nama dan kelas nya, kalau untuk card_product nya itu untuk menghasilkan dari produk yang sudah di buat.
+
+setelah itu saya menambahkan navbar dengan isian nya itu ada home, produk, tentang, dan kontak 
+
 # TUGAS 4
 
 1.  **Apa perbedaan antara HttpResponseRedirect() dan redirect()**
@@ -55,7 +216,6 @@ Untuk menerapkan hal ini, pengguna melakukan registrasi terlebih dahulu agar bis
 
 -Menghubungkan model Item dengan User
 Dalam menghubungkan model Item dengan User, hal pertama yang perlu dilakukan adalah menambahkan kode contrib.auth.models import User. Setelah itu, saya menambahkan variabel user dengan value dari models.ForeignKey(). Fungsi ForeignKey() itu berfungsi untuk mengasosiasikan user dengan produk dalam database dimana nilai dari ForeignKey ini unik untuk setiap user. Tahap selanjutnya adalah melakukan perubahan pada fungsi create_product di subdirektori main dengan menambahkan variabel commit dengan value False pada parameter fungsi save() yang bertujuan untuk mencegah Django agar tidak langsung menyimpan objek yang telah dibuat dari form langsung ke database. Dalam fungsi ini. juga ditambahkan product.user dengan value request.user yang bertujuan untuk menghubungkan produk milik pengguna dengan pengguna yang sedang login.
-
 Langkah selanjutnya adalah mengubah 'nama' dalam context menjadi request.user.username untuk mengakses nama user yang sedang login. Setelah semua langkah tersebut dilakukan, saya melakukan migrasi pada model dengan menetapkan 1 pada default value untuk field user dan pada user id.
 
 

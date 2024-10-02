@@ -1,0 +1,23 @@
+<div class="bg-gradient-to-r from-blue-900 to-purple rounded-xl overflow-hidden">
+    <div class="p-4 animate-shine">
+        <h5 class="text-lg font-semibold text-gray-200">{{ title }}</h5>
+        <p class="text-blue-300">{{ value }}</p>
+    </div>
+</div>
+
+<style>
+    @keyframes shine {
+        0% {
+            background-position: -200px 0;
+        }
+        100% {
+            background-position: 200px 0;
+        }
+    }
+
+    .animate-shine {
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+        background-size: 200% 100%;
+        animation: shine 2s infinite;
+    }
+</style>
