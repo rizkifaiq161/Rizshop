@@ -1,3 +1,74 @@
+# TUGAS 6
+
+1. **Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!**
+
+-Interaktivitas: JavaScript memungkinkan pengembang untuk menambahkan elemen interaktif pada halaman web, seperti tombol yang responsif, animasi, dan efek visual. Ini meningkatkan pengalaman pengguna dan membuat aplikasi lebih menarik.
+
+-Pengolahan Data di Klien: Dengan JavaScript, banyak pengolahan data dapat dilakukan di sisi klien (browser), yang mengurangi beban server dan meningkatkan kecepatan aplikasi. Misalnya, validasi form dan manipulasi DOM dapat dilakukan tanpa memuat ulang halaman.
+
+-Dukungan Penuh untuk AJAX: JavaScript mendukung AJAX (Asynchronous JavaScript and XML), yang memungkinkan aplikasi web untuk memuat data secara asinkron tanpa harus me-refresh halaman. Ini membuat aplikasi lebih responsif dan meningkatkan pengalaman pengguna.
+
+-Kompatibilitas Multi-Platform: JavaScript dapat dijalankan di semua browser modern dan platform, baik di desktop maupun perangkat seluler. Ini menjadikan JavaScript sebagai pilihan yang ideal untuk pengembangan aplikasi web yang ingin menjangkau audiens yang lebih luas.
+
+-Framework dan Library: Terdapat banyak framework dan library JavaScript, seperti React, Angular, dan Vue.js, yang membantu pengembang untuk membangun aplikasi web dengan lebih cepat dan efisien.
+
+
+2. **Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?**
+
+Penggunaan await dalam konteks fungsi fetch() di JavaScript sangat penting untuk menangani operasi asynchronous dengan cara yang lebih terstruktur dan mudah dipahami.
+
+Fungsi await
+
+-Menunggu Hasil: await digunakan untuk menunggu Promise yang dikembalikan oleh fetch() atau operasi asynchronous lainnya. Ketika menggunakan await, eksekusi kode akan terhenti pada baris tersebut sampai Promise selesai (resolved atau rejected).
+
+-Membuat Kode Lebih Bersih: Dengan menggunakan await, dapat menulis kode asynchronous dengan gaya yang mirip dengan kode synchronous, sehingga lebih mudah dibaca dan dipahami. Ini mengurangi kebutuhan untuk menggunakan callback dan membuat struktur kode lebih linear.
+
+Apa yang Terjadi Jika Tidak Menggunakan await
+
+-Promise Tidak Ditunggu: Jika tidak menggunakan await, maka fetch() akan segera mengembalikan Promise, dan eksekusi kode akan melanjutkan tanpa menunggu hasil dari fetch tersebut.
+
+-Data Belum Tersedia: Karena user tidak menunggu, ketika user mencoba untuk mengakses data dari response (misalnya, dengan response.json()), user mungkin akan mendapatkan undefined atau error, karena data tersebut belum tersedia saat itu.
+
+-Membuat Kode Sulit Dipahami: Tanpa await, user harus menangani Promise dengan cara yang lebih kompleks, seperti menggunakan .then() dan .catch(), yang dapat membuat kode lebih sulit dibaca dan dikelola, terutama ketika ada banyak operasi asynchronous yang harus dilakukan secara berurutan
+
+3. **Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?**
+
+-Keamanan CSRF
+CSRF (Cross-Site Request Forgery) adalah jenis serangan di mana seorang penyerang memanfaatkan kredensial pengguna yang telah diautentikasi untuk melakukan permintaan yang tidak sah. Django memiliki perlindungan terhadap CSRF yang secara otomatis memvalidasi token CSRF untuk semua permintaan POST
+
+-Permintaan AJAX
+Permintaan AJAX biasanya dilakukan dengan menggunakan JavaScript di sisi klien, dan saat mengirimkan permintaan POST ke server, token CSRF tidak selalu secara otomatis disertakan. Oleh karena itu, ketika permintaan AJAX POST dilakukan tanpa token CSRF, server akan menolak permintaan tersebut dan menganggapnya tidak sah.
+
+-Menghindari Validasi CSRF untuk View Tertentu
+Dalam beberapa kasus,user mungkin ingin mengizinkan akses tanpa validasi CSRF, terutama jika view tersebut dirancang untuk digunakan oleh aplikasi klien yang terpisah dan aman (misalnya, saat menggunakan API). Dengan menggunakan decorator csrf_exempt, user dapat menghindari validasi CSRF pada view tertentu, yang memungkinkan permintaan AJAX POST untuk diproses tanpa memerlukan token CSRF.
+
+4. **Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?**
+
+-Keamanan
+Keamanan Data: Pengguna dapat dengan mudah memanipulasi kode di sisi klien. Meskipun ada pembersihan di frontend, pengguna yang berbahaya dapat menghindarinya dengan mengubah JavaScript atau mengirimkan permintaan langsung ke server (misalnya, menggunakan alat seperti Postman atau curl). Oleh karena itu, pembersihan data di backend melindungi aplikasi dari input yang berbahaya.
+
+-Validasi yang Konsisten
+Standar Validasi yang Seragam: Dengan melakukan pembersihan di backend, pengguna menjamin bahwa semua data yang diterima oleh server selalu divalidasi dan dibersihkan dengan cara yang konsisten, terlepas dari bagaimana data tersebut dikirim (misalnya, melalui formulir web, API, atau sumber lain).
+
+-Menangani Manipulasi dan Kesalahan
+Menghadapi Input yang Tidak Terduga: Data dari pengguna dapat datang dalam berbagai bentuk, dan tidak semua data dapat diprediksi. Dengan memvalidasi dan membersihkan data di backend, pengguna dapat menangani berbagai jenis input dan kesalahan yang mungkin terjadi, yang mungkin tidak terdeteksi di frontend.
+
+-Keberlanjutan dan Scalabilitas
+Menghadapi Perubahan di Frontend: Jika pengguna melakukan pembersihan hanya di frontend, perubahan pada antarmuka pengguna atau logika bisnis dapat memengaruhi validasi tersebut. Dengan memiliki logika pembersihan di backend, pengguna dapat memperbarui frontend tanpa harus khawatir tentang konsistensi validasi.
+
+-Integrasi dengan Sistem Lain
+Berbagai Sumber Input: Dalam banyak kasus, data pengguna dapat berasal dari berbagai sumber, termasuk API eksternal, sistem internal, atau database. Pembersihan di backend memastikan bahwa semua data, tidak peduli dari mana asalnya, diproses dengan cara yang sama.
+
+-Pengendalian Akses dan Hak Istimewa
+Mengelola Akses Pengguna: Di backend, pengguna dapat menerapkan logika bisnis yang lebih kompleks, seperti memeriksa hak akses pengguna dan membatasi data yang dapat dimodifikasi atau diakses. Ini tidak dapat dilakukan dengan efektif di frontend.
+
+5. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!**
+
+Untuk menerapkan AJAX GET dan POST, saya menambahkan fungsi baru pada method view, yaitu add_product_ajax yang berfungsi untuk menambahkan item menggunakan ajax. Implementasi fungsi tersebut saya terapkan pada file main.html pada subdirektori main/template. Setelah menambahkan beberapa fungsi ajax pada file main, saya juga menambahkan modal untuk menambahkan produk menggunakan ajax dan mengimplementasikan button tambahkan produk untuk mentrigger modal sehingga user bisa menambahkan produk.
+
+
+
+
 # TUGAS 5
 
 1. **Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!**

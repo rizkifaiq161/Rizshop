@@ -14,6 +14,10 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import HttpResponseNotFound
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -22,12 +26,10 @@ def show_main(request):
     context = {
         'name': request.user.username,
         'class': 'PBP E',
-        'products' : products,
         'last_login': request.COOKIES['last_login'],
     }
 
     return render(request, "main.html", context)
-
 
 def create_product(request):
     form = ProductForm(request.POST or None)
@@ -42,12 +44,12 @@ def create_product(request):
     return render(request, "create_product.html", context)
 
 def show_xml(request):
-    data = Item.objects.all()
+    data = Item.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), 
 content_type="application/xml")
 
 def show_json(request):
-    data = Item.objects.all()
+    data = Item.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), 
 content_type="application/json")
 
@@ -74,20 +76,22 @@ def register(request):
     return render(request, 'register.html', context)
 
 def login_user(request):
-   if request.method == 'POST':
-      form = AuthenticationForm(data=request.POST)
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
 
-      if form.is_valid():
+        if form.is_valid():
             user = form.get_user()
             login(request, user)
             response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
 
-   else:
-      form = AuthenticationForm(request)
-   context = {'form': form}
-   return render(request, 'login.html', context)
+    else:
+        form = AuthenticationForm(request)
+        context = {'form': form}
+    return render(request, 'login.html', context)
 
 def logout_user(request):
     logout(request)
@@ -111,7 +115,7 @@ def edit_product(request, id):
     return render(request, "edit_product.html", context)
 
 def delete_product(request, id):
-    product = Item.object.get(pk = id)
+    product = Item.objects.get(pk = id)
 
     product.delete()
     return HttpResponseRedirect(reverse("main:show_main"))
@@ -124,4 +128,23 @@ def about_view(request):
 
 def contact_view(request):
     return render(request, 'contact.html')
+
+def get_product_json(request):
+    product_item = Item.objects.all()
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+@require_POST
+def add_product_ajax(request):
+        name = strip_tags(request.POST.get("name"))
+        price = strip_tags(request.POST.get("price"))
+        description = request.POST.get("description")
+        amount = request.POST.get("amount")
+        user = request.user
+
+        new_product = Item(name=name, price=price, description=description, user=user, amount=amount)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
 

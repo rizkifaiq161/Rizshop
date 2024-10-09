@@ -11,3 +11,4 @@ class Item(models.Model):
     price = models.IntegerField(default=0)
     description = models.TextField()
     amount = models.IntegerField()
+ 
